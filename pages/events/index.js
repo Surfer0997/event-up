@@ -1,5 +1,3 @@
-import Image from "next/image";
-import Link from "next/link";
 import EventsMain from "../../src/components/Events/EventMain";
 
 const EventsPage = ({ data }) => {
@@ -10,7 +8,7 @@ const EventsPage = ({ data }) => {
 
 export default EventsPage;
 export async function getServerSideProps() {
-  const { events_categories } = await import("../../data/data.json");
+  const { events_categories } = await import("../../tmp/data.json");
   return {
     props: {
       data: events_categories,
