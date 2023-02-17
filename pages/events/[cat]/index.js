@@ -1,7 +1,7 @@
 import EventsCat from "../../../src/components/Events/EventsCat";
-import dbConnect from "../../lib/dbConnect";
-import Event from "../../models/Event";
-import EventsCategory from "../../models/EventsCategory";
+import dbConnect from "../../../src/lib/dbConnect";
+import Event from "../../../src/models/Event";
+import EventsCategory from "../../../src/models/EventsCategory";
 
 const EventsCatPage = ({ data, pageName }) => (
   <EventsCat data={data} pageName={pageName} />

@@ -1,7 +1,7 @@
 import { Inter } from "@next/font/google";
 import HomePage from "../src/components/Home/HomePage";
-import dbConnect from "./lib/dbConnect";
-import EventsCategory from './models/EventsCategory'
+import dbConnect from "../src/lib/dbConnect";
+import EventsCategory from "../src/models/EventsCategory";
 
 const inter = Inter({ subsets: ["latin"] });
 

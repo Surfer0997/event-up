@@ -1,11 +1,9 @@
 import EventsMain from "../../src/components/Events/EventMain";
-import dbConnect from "../lib/dbConnect";
-import EventsCategory from '../models/EventsCategory';
+import dbConnect from "../../src/lib/dbConnect";
+import EventsCategory from "../../src/models/EventsCategory";
 
 const EventsPage = ({ data }) => {
-  return (
-    <EventsMain data={data}/>
-  );
+  return <EventsMain data={data} />;
 };
 
 export default EventsPage;

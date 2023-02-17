@@ -1,6 +1,8 @@
-import Event from "../models/Event";
+import dbConnect from "../../src/lib/dbConnect";
+import Event from "../../src/models/Event";
 
 export default async function handler(req, res) {
+  await dbConnect();
   const { method } = req;
 
   if (method === "POST") {
