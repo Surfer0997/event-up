@@ -1,4 +1,5 @@
 import EventsMain from "../../src/components/Events/EventMain";
+import EventsCategory from '../models/EventsCategory';
 
 const EventsPage = ({ data }) => {
   return (
@@ -7,11 +8,11 @@ const EventsPage = ({ data }) => {
 };
 
 export default EventsPage;
-export async function getServerSideProps() {
-  const { events_categories } = await import("../../tmp/data.json");
+export const getServerSideProps = async () => {
+  const eventsCategories = await EventsCategory.find();
   return {
     props: {
-      data: events_categories,
+      data: JSON.parse(JSON.stringify(eventsCategories)), // SHEEAT
     },
   };
-}
+};

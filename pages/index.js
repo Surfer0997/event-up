@@ -1,21 +1,22 @@
 import { Inter } from "@next/font/google";
 import HomePage from "../src/components/Home/HomePage";
+import EventsCategory from './models/EventsCategory'
 
 const inter = Inter({ subsets: ["latin"] });
 
 export default function Home({ data }) {
   return (
     <>
-    <HomePage data={data}/>
+      <HomePage data={data} />
     </>
   );
 }
 
 export const getServerSideProps = async () => {
-  const { events_categories } = await import("../tmp/data.json");
+  const eventsCategories = await EventsCategory.find();
   return {
     props: {
-      data: events_categories,
+      data: JSON.parse(JSON.stringify(eventsCategories)), // SHEEAT
     },
   };
 };

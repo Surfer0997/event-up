@@ -1,54 +1,30 @@
-import path from 'path';
-import fs from 'fs';
+import Event from "../models/Event";
 
-function buildPath() {
-    return path.join(process.cwd(), 'tmp', 'data.json')
-}
+export default async function handler(req, res) {
+  const { method } = req;
 
-function extractData(filePath) {
-    const jsonData = fs.readFileSync(filePath);
-    const data = JSON.parse(jsonData);
-    return data;
-}
+  if (method === "POST") {
+    const { email, eventId } = req.body;
 
-export default function handler(req,res) {
-    const {method} = req;
+    if (!email | !email.includes("@")) {
+      res.status(422).json({ message: "Invalid email address" });
+    }
+    const eventToUpdate = await Event.findOne({ id: eventId });
 
-    const filePath = buildPath();
-    const {events_categories, allEvents} = extractData(filePath);
-
-    
-    if(!allEvents) {
-        return res.status(404).json({
-            message: 'Events data not found'
-        })
+    if (eventToUpdate.emails_registered.includes(email)) {
+      res.status(403).json({ message: "This email is already registered." });
+      return eventToUpdate;
     }
 
-    if (method === 'POST') {
-        const {email, eventId} = req.body;
+    const newRegiteredEmails = [...eventToUpdate.emails_registered, email];
 
-        if (!email | !email.includes('@')) {
-            res.status(422).json({ message: 'Invalid email address' });
-          }
+    const updatedEvent = await Event.findOneAndUpdate(
+      { id: eventId },
+      { emails_registered: newRegiteredEmails }
+    );
 
-        const newAllEvents = allEvents.map(ev=>{
-            if (ev.id === eventId) {
-                if (ev.emails_registered.includes(email)) {
-                    res.status(403).json({message:'This email is already registered.'})
-                    return ev;
-                }
-                return {
-                    ...ev,
-                    emails_registered: [...ev.emails_registered, email]
-                }
-            }
-            return ev;
-        });
-
-        fs.writeFileSync(filePath, JSON.stringify({events_categories, allEvents: newAllEvents}))
-           
-
-
-        res.status(200).json({message:`You have been registered successfully with email ${email}`})
-    }
+    res.status(200).json({
+      message: `You have been registered successfully with email ${email}`,
+    });
+  }
 }

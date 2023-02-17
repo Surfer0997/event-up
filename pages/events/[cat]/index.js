@@ -1,4 +1,5 @@
 import EventsCat from "../../../src/components/Events/EventsCat";
+import Event from "../../models/Event";
 
 const EventsCatPage = ({ data, pageName }) => (
   <EventsCat data={data} pageName={pageName} />
@@ -23,7 +24,8 @@ export async function getStaticPaths() {
 }
 
 export const getStaticProps = async (context) => {
-  const { allEvents } = await import("../../../tmp/data.json");
+  const allEvents = JSON.parse(JSON.stringify(await Event.find()));
+
   const city = context?.params.cat;
   const dataForThisPage = allEvents.filter((event) => event.city === city);
 

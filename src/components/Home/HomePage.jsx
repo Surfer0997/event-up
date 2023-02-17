@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 
 const HomePage = ({data}) => {
+  console.log(data);
   return (
     <div className="home_body">
       {data.map((event) => (
