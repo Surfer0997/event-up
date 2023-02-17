@@ -1,5 +1,6 @@
 import EventsCat from "../../../src/components/Events/EventsCat";
 import Event from "../../models/Event";
+import EventsCategory from "../../models/EventsCategory";
 
 const EventsCatPage = ({ data, pageName }) => (
   <EventsCat data={data} pageName={pageName} />
@@ -8,8 +9,8 @@ const EventsCatPage = ({ data, pageName }) => (
 export default EventsCatPage;
 
 export async function getStaticPaths() {
-  const { events_categories } = await import("../../../tmp/data.json");
-  const allPaths = events_categories.map((event) => {
+  const eventsCategories = await EventsCategory.find();
+  const allPaths = eventsCategories.map((event) => {
     return {
       params: {
         cat: event.id.toString(),
