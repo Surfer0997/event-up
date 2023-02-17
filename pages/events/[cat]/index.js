@@ -1,4 +1,5 @@
 import EventsCat from "../../../src/components/Events/EventsCat";
+import dbConnect from "../../lib/dbConnect";
 import Event from "../../models/Event";
 import EventsCategory from "../../models/EventsCategory";
 
@@ -9,6 +10,7 @@ const EventsCatPage = ({ data, pageName }) => (
 export default EventsCatPage;
 
 export async function getStaticPaths() {
+  await dbConnect();
   const eventsCategories = await EventsCategory.find();
   const allPaths = eventsCategories.map((event) => {
     return {
@@ -25,7 +27,8 @@ export async function getStaticPaths() {
 }
 
 export const getStaticProps = async (context) => {
-  const allEvents = JSON.parse(JSON.stringify(await Event.find()));
+  await dbConnect();
+  const allEvents = await JSON.parse(JSON.stringify(await Event.find()));
 
   const city = context?.params.cat;
   const dataForThisPage = allEvents.filter((event) => event.city === city);

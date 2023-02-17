@@ -1,4 +1,5 @@
 import SingleEvent from "../../../src/components/Events/SingleEvent";
+import dbConnect from "../../lib/dbConnect";
 import Event from '../../models/Event'
 
 
@@ -9,6 +10,7 @@ const EventPage = ({ data: { title, image, description } }) => (
 export default EventPage;
 
 export async function getStaticPaths() {
+  await dbConnect();
   const allEvents = await Event.find();
   const allPaths = allEvents.map((event) => {
     return {
@@ -26,7 +28,8 @@ export async function getStaticPaths() {
 }
 
 export async function getStaticProps(context) {
-  const { allEvents } = await import("../../../tmp/data.json");
+  await dbConnect();
+  const allEvents = await Event.find();
   const eventId = context?.params.id;
   const data = allEvents.filter((event) => event.id === eventId)[0];
   return {

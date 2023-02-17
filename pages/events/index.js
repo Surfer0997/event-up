@@ -1,4 +1,5 @@
 import EventsMain from "../../src/components/Events/EventMain";
+import dbConnect from "../lib/dbConnect";
 import EventsCategory from '../models/EventsCategory';
 
 const EventsPage = ({ data }) => {
@@ -9,6 +10,7 @@ const EventsPage = ({ data }) => {
 
 export default EventsPage;
 export const getServerSideProps = async () => {
+  await dbConnect();
   const eventsCategories = await EventsCategory.find();
   return {
     props: {
