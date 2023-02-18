@@ -1,6 +1,6 @@
 const Footer = () => (
   <footer>
-    <p>228 time to get high inc.</p>
+    <p>{`2022-${new Date().getFullYear()} Time to get high inc.`}</p>
   </footer>
 );
 

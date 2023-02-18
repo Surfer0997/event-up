@@ -1,4 +1,9 @@
-ul
+@counter-style party
+  system: cyclic
+  symbols: "\1F973" "\1F60E" "\1F638" "\1F4AB" "\1F99C" "\1F433"
+  suffix: " "
+  
+  ul
   list-style: none
 
 header
@@ -21,6 +26,7 @@ header
   .topNav
     display: flex
     justify-content: space-between
+    align-items: center
     align-content: center
     ul
       display: flex
@@ -34,7 +40,7 @@ header
 footer
   background-color: #333
   color: #fff
-  padding: 10px
+  padding: 1.5rem
   text-align: center
 
 main
@@ -78,9 +84,24 @@ main
     .content
       width: 50%
 .about-us_page
+  margin-top: -3rem
   display: flex
   gap: 2rem
   flex-direction: column
+  align-items: center
+  font-size: 20px
+  & h3
+    text-align: center
+    margin-bottom: 1.5rem
+  & li
+    list-style-type: none
+  & div ul
+    margin-top: 1rem
+    background-color: rgba(140, 255, 230, .5)
+    padding: 1rem 4rem
+    border-radius: 1rem
+  & div ul li
+    list-style-type: party
   .about_us_list
     display: flex
     gap: 2rem
@@ -94,6 +115,13 @@ main
   justify-content: center
   .card
     position: relative
+    height: 300px
+    width: 300px
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px
+    transition: .5s
+    &:hover
+      box-shadow: rgba(0, 0, 0, 0.55) 0px 8px 25px
+      transform: translateY(-.5rem)
     h2
       position: absolute
       width: 100%

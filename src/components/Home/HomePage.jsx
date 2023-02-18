@@ -11,9 +11,8 @@ const HomePage = ({data}) => {
           </div>
           <div className="content">
           <h2>{event.title}</h2>
-          <p>{event.description}</p>
+          <p style={{marginTop:'1.5rem'}}>{event.description}</p>
           </div>
-        
         </Link>
       ))}
     </div>

@@ -8,10 +8,10 @@ const EventsMain = ({ data }) => {
         {data.map((event) => (
           <Link className="card" key={event.id} href={`/events/${event.id}`}>
             <Image
+            fill
               src={event.image}
               alt={event.title}
-              width={300}
-              height={300}
+              style={{objectFit:"cover"}}
             />
             <h2>{event.title}</h2>
           </Link>
