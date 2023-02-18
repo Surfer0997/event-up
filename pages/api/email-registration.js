@@ -8,9 +8,11 @@ export default async function handler(req, res) {
   if (method === "POST") {
     const { email, eventId } = req.body;
 
-    if (!email | !email.includes("@")) {
+    if (!email | !email.includes("@") | !email.includes(".")) {
       res.status(422).json({ message: "Invalid email address" });
+      return false;
     }
+
     const eventToUpdate = await Event.findOne({ id: eventId });
 
     if (eventToUpdate.emails_registered.includes(email)) {
@@ -28,5 +30,6 @@ export default async function handler(req, res) {
     res.status(200).json({
       message: `You have been registered successfully with email ${email}`,
     });
+    return true;
   }
 }

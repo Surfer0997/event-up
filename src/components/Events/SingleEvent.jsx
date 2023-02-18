@@ -1,11 +1,11 @@
 import Image from "next/image";
 import { useRouter } from "next/router";
 import { useState, useRef } from "react";
+import { showToast } from "../../lib/showToast";
 
 const SingleEvent = ({ data: { title, image, description } }) => {
   const inputEmail = useRef();
   const router = useRouter();
-  const [message, setMessage] = useState("");
 
   const submitHandler = async (e) => {
     e.preventDefault();
@@ -16,7 +16,7 @@ const SingleEvent = ({ data: { title, image, description } }) => {
       /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
 
     if (!emailValue.match(validRegex)) {
-      setMessage("Please introduce a correct email address");
+      showToast('ERROR', "Please introduce a correct email address")
       return;
     }
 
@@ -30,16 +30,16 @@ const SingleEvent = ({ data: { title, image, description } }) => {
         },
         body: JSON.stringify({ email: emailValue, eventId }),
       });
-      
+
       if (!response.ok) {
-        response.json().then((resData)=>{
-          setMessage(resData.message);
-        })
+        response.json().then((resData) => {
+          showToast('ERROR', resData.message)
+        });
         throw new Error(`Error while registering an email. ${response.status}`);
       }
       const data = await response.json();
-      setMessage(data?.message);
-      inputEmail.current.value = '';
+      showToast('SUCCESS', data?.message)
+      inputEmail.current.value = "";
     } catch (error) {
       console.error(error);
     }
@@ -48,8 +48,10 @@ const SingleEvent = ({ data: { title, image, description } }) => {
   return (
     <div className="event_single_page">
       <h1>{title}</h1>
-      <Image src={image} width={500} height={500} alt={title} />
-      <p>{description}</p>
+      <div className="image-container">
+        <div><Image src={image} fill alt={title} style={{ objectFit: "contain" }} /></div>
+      </div>
+      <p className="description">{description}</p>
       <form onSubmit={submitHandler} className="email_registration">
         <label htmlFor="email">Get registered for this event!</label>
         <input
@@ -60,7 +62,6 @@ const SingleEvent = ({ data: { title, image, description } }) => {
         />
         <button type="submit">Submit</button>
       </form>
-      <p>{message}</p>
     </div>
   );
 };

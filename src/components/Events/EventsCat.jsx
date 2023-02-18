@@ -15,14 +15,16 @@ const EventsCat = ({ data, pageName }) => {
             key={event.id}
             passHref
           >
+            <div className="image">
             <Image
               src={event.image}
               alt={event.title}
-              width={300}
-              height={300}
+              fill
+              style={{objectFit:"cover"}}
             />
+            </div>
             <h2>{event.title}</h2>
-            <p>{event.description}</p>
+            <p className="description">{event.description}</p>
           </Link>
         ))}
       </div>

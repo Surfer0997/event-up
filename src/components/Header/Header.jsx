@@ -1,5 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
+import { ToastContainer } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 
 const Header = () => {
   return (
@@ -34,6 +36,7 @@ const Header = () => {
         </div>
         <p className="title">Joyful events in your city</p>
       </div>
+      <ToastContainer />
     </header>
   );
 };
